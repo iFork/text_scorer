@@ -1,0 +1,6 @@
+hello
+Hello
+new
+New York
+Hello New York
+invalid line will invalidatefailbit of getline
