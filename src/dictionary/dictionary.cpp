@@ -1,5 +1,7 @@
 #include "dictionary.hpp"
 
+#include <plog/Log.h>
+
 #include <string>
 #include <fstream>
 #include <cassert>
@@ -30,6 +32,9 @@ void print_stream_state(std::istream& steam);
 dictionary::dictionary(const char* user_file_path, size_t seed) throw()
                                             //TODO: remove throw(), will throw
 {
+    PLOGD << "Constructing dictionary at " << this 
+        << " with random score matrices from " 
+        << user_file_path << " file with starting seed = " << seed;
     assert(NULL != user_file_path);
     std::ifstream file;
     std::string term;
@@ -60,6 +65,7 @@ dictionary::dictionary(const char* user_file_path, size_t seed) throw()
 
 dictionary::~dictionary() throw()
 {
+    PLOGD << "Destructing dictionary at " << this ;
 }
 
 /*
@@ -115,7 +121,8 @@ void test_dictionary_ctor()
     
     const char* file_path = "user_data/terms.txt";
     dictionary d2(file_path, 1);
-    std::cout << d2 << std::endl;
+    //std::cout << d2 << std::endl;
+    PLOGV << "\n" << d2;
 }
 
 //////////////////

@@ -43,6 +43,7 @@ uic_flags :=
 # 
 cflags += \
 		-std=c++98 \
+		-I ../utils/plog/include \
 		-I$(HOME)/boost_1_72_0  
 
 #		-I../../inc_ducttaped  
@@ -56,29 +57,9 @@ cflags += \
 #TODO: or change flags in mkf/definitions.mk
 compiler_flags += \
 		-std=c++98 \
+		-I ../utils/plog/include \
 		-I$(HOME)/boost_1_72_0 \
 
-#		-I../../inc_ducttaped  
-
-#		-I$(HOME)/boost_1_72_0 \ 
-#		-I/home/mher/boost_1_72_0 \ 
-			#needed for indirect inclusion too
-			#NO - caused ERROR w/ inclusion of dictionary.hpp 
-			#error:  -I/home/mher/HW/text_scorer_app/text_scorer/inc: No such file or directory
-			#BUT - when including dictionary it asks for boost path
-			#AND providing it BREAKS DOWN FIXME !!!!!
-		#NOTE: LESSONS_LEARNED: line continuation mark at the last line
-		#of flag BREAKS the gcc command and gcc reports ERROR of
-		#' No such file or directory' !!!!!!!!!!	
-		#LESSONS_LEARNED:2: "\ + CR" symbols are passed to the shell, different
-		#termianls may use different Shell, even more, makefile's 
-		#shell may be different from terminal's shell 
-		#and unpredictable / hard to 
-		# explain oddities arrise 
-
-	#	-I$(HOME)/poco/Net/include \
-	#	-I$(HOME)/poco/JSON/include \
-	#	-I$(HOME)/poco/Foundation/include \
 
 compiler_flags := $(filter-out -Werror -Wconversion -Wundef, $(compiler_flags))
 # -Wundef : for boost
@@ -93,10 +74,6 @@ compiler_flags := $(filter-out -Werror -Wconversion -Wundef, $(compiler_flags))
 #
 linker_flags += -lstdc++ -ldl \
 		#-lW \   # to make order of libs in this list irrelevant
-#				-lPocoNet \
-#				-lPocoFoundation \
-#				-lPocoJSON \
-#				-L$(HOME)/poco/lib/Linux/$(architecture)
 
 # The libraries which should be linked to the current project. The link type is
 # specified as a global parameter, except the libraries, which are built as a

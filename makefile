@@ -42,7 +42,6 @@ projects := \
 	src/app \
 	src/dictionary \
 	src/score_matrix \
-	src/utilities \
 
 # Prerequisite tools
 preconditions := gcc doxygen ar ln pkg-config lcov
@@ -97,8 +96,8 @@ include $(mkf_path)/doc.mk
 
 # Dependencies between projects
 #
-src/app: src/dictionary src/score_matrix
-src/dictionary: src/score_matrix
+src/app: src/dictionary src/score_matrix 
+src/dictionary: src/score_matrix 
 
        #	src/utilities
 #src/dictionary: src/utilities

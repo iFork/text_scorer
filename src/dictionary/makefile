@@ -46,19 +46,15 @@ uic_flags :=
 
 cflags += \
 		-std=c++98 \
+		-I ../utils/plog/include \
 		-I$(HOME)/boost_1_72_0 
 #		-fPIC \
-#		-I$(HOME)/poco/Net/include \
-#		-I$(HOME)/poco/JSON/include \
-#		-I$(HOME)/poco/Foundation/include \
 
 #TODO: or change flags in mkf/definitions.mk
 compiler_flags += \
 		-std=c++98 \
+		-I ../utils/plog/include \
 		-I$(HOME)/boost_1_72_0 
-		#-I$(HOME)/poco/JSON/include \
-		#-I$(HOME)/poco/Foundation/include \
-		#-I$(HOME)/poco/Net/include \
 
 compiler_flags := $(filter-out -Werror -Wconversion -Wundef, $(compiler_flags))
 # -Wundef : for boost
