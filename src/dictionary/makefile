@@ -18,12 +18,18 @@
 
 # The source files under the project.
 cpp_files := \
-		dictionary.cpp \
+		term_dictionary.cpp \
+		stub_dictionary.cpp \
+		stub_info.cpp \
+		word_list.cpp \
 
 # The header files under the project, which are supposed to be used by other
 # projects.
 public_headers := \
-		dictionary.hpp \
+		term_dictionary.hpp \
+		stub_dictionary.hpp \
+		stub_info.hpp \
+		word_list.hpp \
 
 # Building QT project.
 # TODO: Add detailed comments.

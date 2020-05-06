@@ -5,36 +5,47 @@
 //DEV includes
 #include <iostream>
 
-#include "dictionary/dictionary.hpp"
+#include "config_values.hpp"
+#include "top.hpp"
+
+#include "dictionary/term_dictionary.hpp"
+#include "dictionary/word_list.hpp"
+#include "dictionary/stub_dictionary.hpp"
+#include "dictionary/stub_info.hpp"
 
 #include "score_matrix/score_matrix.hpp"
 
 #include "boost/unordered_map.hpp"
 
-#define DEBUG_VERBOSE
+
 
 using namespace instigate::text_scorer;
 
+
+void init_logger(const plog::Severity log_severity, const std::string& log_file,
+        bool enable_console_logging);
+
 int main(int argc, char* argv[])
 {
-    //initialize logger
-    const char* LOG_FILE = "app_data/log.txt";
-    //const plog::Severity LOG_SEVERITY = plog::debug;
-    const plog::Severity LOG_SEVERITY = plog::verbose;
-    static plog::RollingFileAppender<plog::TxtFormatter> 
-            fileAppender(LOG_FILE, 8000, 3); 
-    static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender; 
-    plog::init(LOG_SEVERITY, &fileAppender).addAppender(&consoleAppender);
-    //plog::init(LOG_SEVERITY, LOG_FILE, 10000, 2);
-    PLOGN << "Logger initialized with severity level " << LOG_SEVERITY;
+
+    const app::config_values cfg_vals(argc, argv);
+
+    init_logger(cfg_vals.log_severity, cfg_vals.log_file, 
+        cfg_vals.enable_console_logging);        
 
     std::cout << "Hi \n";
     
-//    dictionary::dictionary d;
+//    term_dictionary::term_dictionary d;
 //    d.say_hi();
 
-    dictionary::test_dictionary_ctor();
+    app::test_score_provider_ctor();
+
+    dictionary::test_word_list_ctor();
     
+    dictionary::test_term_dictionary_ctor();
+    dictionary::test_term_find();
+
+    dictionary::test_stub_info() ;
 
     score_matrix::test_radom_num_gen();
 
@@ -47,3 +58,28 @@ int main(int argc, char* argv[])
     return 0;
 
 }
+
+
+//initialize logger
+void init_logger(const plog::Severity log_severity, const std::string& log_file,
+        bool enable_console_logging)
+{
+    //plog::Logger<0> logger = plog::init(log_severity, &file_appender);
+    const char* log_file_c = log_file.c_str();
+    if(enable_console_logging) {
+        static plog::RollingFileAppender<plog::TxtFormatter> 
+            file_appender(log_file_c, 8000, 3); 
+        static plog::ColorConsoleAppender<plog::TxtFormatter> console_appender; 
+        //logger.addAppender(&console_appender);
+        plog::init(log_severity, &file_appender).addAppender(&console_appender);
+    }
+    else {
+        static plog::RollingFileAppender<plog::TxtFormatter> 
+            file_appender(log_file_c, 8000, 3); 
+        plog::init(log_severity, &file_appender);
+    }
+    //plog::init(LOG_SEVERITY, LOG_FILE, 10000, 2);
+    PLOGN << "Logger initialized with severity level " << log_severity;
+}
+
+

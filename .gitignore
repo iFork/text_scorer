@@ -11,10 +11,16 @@
 *.gch
 *.pch
 
+# Derivative Headers
+/inc/
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
+/lib/
+/lib32/
+/lib64/
 
 # Fortran module files
 *.mod
@@ -30,3 +36,4 @@
 *.exe
 *.out
 *.app
+/bin/

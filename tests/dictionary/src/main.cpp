@@ -2,7 +2,7 @@
 //DEV includes
 #include <iostream>
 
-#include "dictionary/dictionary.hpp"
+#include "dictionary/term_dictionary.hpp"
 
 using namespace instigate::text_scorer;
 

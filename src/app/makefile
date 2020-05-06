@@ -17,11 +17,18 @@
 #
 
 # The source files under the project.
-cpp_files := main.cpp
+cpp_files := \
+		main.cpp \
+		score_provider.cpp \
+		scorer.cpp \
+		top.cpp \
+		config_values.cpp \
+
 
 # The header files under the project, which are supposed to be used by other
 # projects.
-public_headers :=
+public_headers := \
+		definses.hpp \
 
 # Building QT project.
 # TODO: Add detailed comments.
@@ -44,6 +51,7 @@ uic_flags :=
 cflags += \
 		-std=c++98 \
 		-I ../utils/plog/include \
+		-I ../utils/tclap/include \
 		-I$(HOME)/boost_1_72_0  
 
 #		-I../../inc_ducttaped  
@@ -58,6 +66,7 @@ cflags += \
 compiler_flags += \
 		-std=c++98 \
 		-I ../utils/plog/include \
+		-I ../utils/tclap/include \
 		-I$(HOME)/boost_1_72_0 \
 
 
