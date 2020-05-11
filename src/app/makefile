@@ -21,6 +21,7 @@ cpp_files := \
 		main.cpp \
 		score_provider.cpp \
 		scorer.cpp \
+		scoring_info.cpp \
 		top.cpp \
 		config_values.cpp \
 
@@ -28,7 +29,7 @@ cpp_files := \
 # The header files under the project, which are supposed to be used by other
 # projects.
 public_headers := \
-		definses.hpp \
+
 
 # Building QT project.
 # TODO: Add detailed comments.

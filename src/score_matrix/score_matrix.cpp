@@ -105,6 +105,17 @@ score_matrix::score_matrix(const score_matrix_randomizer& smr):
     #endif //DEBUG_VERBOSE
 }
 
+score_matrix::score_matrix(const score_matrix& sm):
+        m_matrix(sm.m_matrix)
+{
+}
+
+score_matrix& score_matrix::operator=(const score_matrix& rhs)
+{
+    m_matrix = rhs.m_matrix;
+    return *this;
+}
+
 //Accessors Implementation
 std::ostream& operator<<(std::ostream& stream, 
             const score_matrix& sm)
@@ -132,8 +143,14 @@ bool score_matrix::operator()(size_t row, size_t col) const
 score_matrix score_matrix::operator+(const score_matrix& rhs) const
 {
     std::bitset<score_matrix::N_ELEMENTS> result_bits = 
-        this->m_matrix | rhs.m_matrix;
+        m_matrix | rhs.m_matrix;
     return score_matrix(result_bits);
+}
+
+score_matrix& score_matrix::operator+=(const score_matrix& rhs)
+{
+    m_matrix |= rhs.m_matrix;
+    return *this;
 }
 
 bool score_matrix::operator==(const score_matrix& rhs) const

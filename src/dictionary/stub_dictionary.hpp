@@ -21,9 +21,12 @@ namespace instigate {
 namespace text_scorer {
 namespace dictionary {
 
+//=============TESTING
+void test_stub_dictionary_ctor();
+
 /**
- * Decompose sentence into a set of all possible sequential stabs
- * of given maximum lenght and store stub_info for each stub
+ * Decompose word sequence into a set of all possible sequential stabs
+ * of given maximum length and store stub_info for each stub
  */
 class stub_dictionary {
 
@@ -35,18 +38,17 @@ public:
     //TODO: what if INHERIT stub_dictionary : public map 
     //  need for iterator exposure and func wrapping will drop !!!!
         
-    //Public static constants
-    static const int MAX_TERM_LENGTH = 10; 
 
     //C-tor, d-tor
     /**
-    * C-tor decomposing sentence into a set of all possible sequential stabs
-    * @param sentence a string to decompose
+    * C-tor decomposing word sequence into a set of all possible sequential 
+    * stabs.
+    * @param word_sequence A string to decompose
+    * @param max_term_length Maximum length of term considered when 
+    *                        synthesizing terms from a word sequence
     */
-    stub_dictionary(const std::string& sentence);
-        //no puntuation ? 
-        //no terminal punctuation ?
-        //or keep punctiuation as part of term ?
+    stub_dictionary(const std::vector<std::string>& word_sequence, 
+            const size_t max_term_length);
     
     /**
      * D-tor
@@ -97,6 +99,21 @@ private:
     //Private data members
     //hash map of term-stubs and their info
     map m_stub_stub_info;
+
+    //Private Helpers
+    void insert_stubs(std::vector<std::string>::const_iterator anchor_it,
+        int anchor_index,
+        std::vector<std::string>::const_iterator end_it,
+        const size_t max_term_length);
+   
+    void insert_stub(const std::string& stub, int start_index, int end_index);
+
+    //Private static helpers
+    static bool inline stub_length_is_good(
+            std::vector<std::string>::const_iterator anchor_it,
+            std::vector<std::string>::const_iterator end_slider_it,
+            const size_t max_term_length);
+
 
 //Special member function not supported
 	stub_dictionary(const stub_dictionary&);

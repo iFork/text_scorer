@@ -18,6 +18,7 @@
 #pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 */
 
+#include "common/defines.hpp"
 #include "score_matrix/score_matrix.hpp"
 
 #include <string>
@@ -54,12 +55,12 @@ public:
 	/**
      * A c-tor converting term list into a term_dictionary with random
      * score matrics.
-     * @param user_file_path Path to the text file with a term list.
+     * @param terms_file_path Path to the text file with a term list.
      * @param seed Starting seed for creating random score matrices.
      * @param hash_load_factor Desired load factor of hashmap buckets in 
      *                          terms dictionary.
      */
-    term_dictionary(const std::string& user_file_path, size_t seed,
+    term_dictionary(const std::string& terms_file_path, size_t seed,
             size_t hash_load_factor);
 
 	/**
@@ -120,7 +121,7 @@ public:
      * @return An iterator to an element with key equivalent to 
      *         term, or end() if no such element exists.
      */
-    const_iterator find(const std::string& term);
+    const_iterator find(const std::string& term) const;
 
     /*
      * Find score of a given term in a dictionary.
@@ -141,7 +142,7 @@ public:
 
 private:
 
-//TODO: Special member function not supported
+//Special member function not supported
 	term_dictionary(const term_dictionary&);
 	term_dictionary& operator=(const term_dictionary&);
 

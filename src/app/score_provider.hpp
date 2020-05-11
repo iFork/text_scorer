@@ -1,17 +1,14 @@
 
 /**
- * @file src/app/score_provider.hpp
- * @brief 
- * TODO: 
+ * @file 
  */
 
 #ifndef TEXT_SCORER_APP_SCORE_PROVIDER_HPP
 #define TEXT_SCORER_APP_SCORE_PROVIDER_HPP 
 
 
-
 #include "dictionary/term_dictionary.hpp"
-#include "dictionary/word_list.hpp"
+#include "dictionary/term_list.hpp"
 
 #include "score_matrix/score_matrix.hpp"
 
@@ -60,6 +57,7 @@ public:
      *                          terms dictionary.
      * @param stopwords_file_path Path to the file with stop-words list.
      *                            One term (word)  per line.
+     * @throws @todo //TODO document exceptions 
      */
     score_provider(const init_mode mode,
                     const std::string& terms_file_path, 
@@ -79,15 +77,15 @@ public:
     /**
      * Get stopwords
      */
-    const dictionary::word_list* get_stopwords_ptr() const;
+    const dictionary::term_list* get_stopwords_ptr() const;
 
     //void dump(const char* terms_dump_file, const char* stopwords_dump_path);
 
 private:
     //Private data members
     //parsed / deserialized data
-    dictionary::term_dictionary* m_terms;
-    dictionary::word_list* m_stopwords;
+    dictionary::term_dictionary* m_terms_p;
+    dictionary::term_list* m_stopwords_p;
 
     //Special member function not supported
 	score_provider(const score_provider&);

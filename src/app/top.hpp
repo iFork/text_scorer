@@ -44,6 +44,11 @@ public:
             const std::string& stopwords_file_path);
             //TODO: add: dump_flag / dump_file_dir
 
+    /**
+     * D-tor
+     */
+    ~top();
+
     //Public methods
     /**
      * Start engagement with user.
@@ -59,10 +64,18 @@ private:
     
     //Private helpers
     //TODO: process / validate interactive input 
+        //TODO: catch invalid chars in term - terminate or skip ?
+        //TODO: make lower case !!
+        //no puntuation ? 
+        //no terminal punctuation ?
+        //or keep punctiuation as part of term ?
     //enum input_profile { ... } input_profiler(std::string line);
     
     //bool validate_chars();
 
+    //Special member function not supported
+	top(const top&);
+	top& operator=(const top&);
 };
 
 } //app

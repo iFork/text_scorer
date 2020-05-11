@@ -7,7 +7,7 @@
 #define TEXT_SCORER_APP_CONFIG_VALUES_HPP 
 
 #include "score_provider.hpp"
-#include "defines.hpp"
+#include "common/defines.hpp"
 
 #include <plog/Log.h>
 //#include "tclap/CmdLine.h"
@@ -60,6 +60,12 @@ struct config_values {
     //const std::string stopwords_dump_file;
 
 }; 
+
+/**
+* Output stream insertion operator overload
+*/
+std::ostream& operator<<(std::ostream& stream, 
+        const config_values& cv);
 
 } //app
 } //text_scorer

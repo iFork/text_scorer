@@ -15,10 +15,16 @@ score_provider::score_provider(const init_mode mode,
                     size_t seed, size_t hash_load_factor,
                     const std::string& stopwords_file_path)
 {
+    PLOGD << "Constructing score_provider at " << this ;
+    PLOGV << "with init_mode `" << mode << "`"
+        << ", terms_file_path `" << terms_file_path << "`"
+        << ", seed `" << seed << "`"
+        << ", hash_load_factor `" << hash_load_factor << "`"
+        << ", stopwords_file_path `" << stopwords_file_path << "`";
     if(init_mode_user_files == mode) {
-        m_terms = new dictionary::term_dictionary(terms_file_path, seed, 
+        m_terms_p = new dictionary::term_dictionary(terms_file_path, seed, 
                 hash_load_factor);
-        m_stopwords = new dictionary::word_list(stopwords_file_path);
+        m_stopwords_p = new dictionary::term_list(stopwords_file_path);
     }
     else {
         std::ostringstream msg;
@@ -26,24 +32,29 @@ score_provider::score_provider(const init_mode mode,
             << " is not implemented";
         PLOGF << msg;
         throw std::runtime_error(msg.str());
-        //TODO: custom exception 
+        //TODO: custom exception, document exception 
     }
 }
 
 score_provider::~score_provider()
 {
-    delete m_terms;
-    delete m_stopwords;
+    PLOGD << "Destructing score_provider at " << this ;
+    delete m_terms_p;
+    delete m_stopwords_p;
 }
 
 //Accessors Implementation
 const dictionary::term_dictionary* score_provider::get_term_dictionary_ptr() const
 {
-    return m_terms;
+    PLOGD << "Called..."; 
+    assert(m_terms_p);
+    return m_terms_p;
 }
-const dictionary::word_list* score_provider::get_stopwords_ptr() const
+const dictionary::term_list* score_provider::get_stopwords_ptr() const
 {
-    return m_stopwords;
+    PLOGD << "Called...";
+    assert(m_stopwords_p);
+    return m_stopwords_p;
 }
 
 //Stream operator overload

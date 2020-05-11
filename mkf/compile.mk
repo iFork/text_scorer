@@ -103,17 +103,17 @@ compile: $(rcc_files) $(ui_headers) $(public_headers) $(obj_files)
 SHELL := /bin/bash
 $(objs_path)/%.o: %.cpp
 	$(echo) "CC	$<"
-	$(echo) "TEMPO LOG" $@
-	$(echo) "TEMPO LOG" $(compiler_flags) " --cf--"  $(cflags)
-	$(echo) "TEMPO LOG" $(shell pwd)
-	$(echo) "TEMPO LOG" $(SHELL)
-	$(echo) "TEMPO LOG" $(compiler) -c $(compiler_flags) $(cflags)  $< -o $@
-	#g++ -c $(compiler_flags) $(cflags)  $< -o $@
+#	$(echo) "TEMPO LOG" $@
+#	$(echo) "TEMPO LOG" $(compiler_flags) " --cf--"  $(cflags)
+#	$(echo) "TEMPO LOG" $(shell pwd)
+#	$(echo) "TEMPO LOG" $(SHELL)
+#	$(echo) "TEMPO LOG" $(compiler) -c $(compiler_flags) $(cflags)  $< -o $@
+#	#g++ -c $(compiler_flags) $(cflags)  $< -o $@
 	$(compiler) -c $(compiler_flags) $(cflags)  $< -o $@
-	$(echo) "TEMPO LOG" " --END of o:cpp"
+#	$(echo) "TEMPO LOG" " --END of o:cpp"
 
 $(objs_path)/%.o: $(objs_path)/%.cpp
-	$(echo) "TEMPO LOG" $@
+#	$(echo) "TEMPO LOG" $@
 	$(echo) "CC	$(subst $(objs_path)/,,$<)"
 	$(compiler) -c $(compiler_flags) $(cflags) $< -o $@
 

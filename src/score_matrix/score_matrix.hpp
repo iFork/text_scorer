@@ -8,7 +8,7 @@
 #ifndef TEXT_SCORER_SCORE_MATRIX_HPP
 #define TEXT_SCORER_SCORE_MATRIX_HPP
 
-//#define DEBUG_VERBOSE
+#include "common/defines.hpp"
 
 //#include <string>
 #include <bitset>
@@ -108,6 +108,18 @@ public:
      */
     score_matrix(const score_matrix_randomizer& smr);
 
+    //Special member function not supported
+    /**
+     * Copy c-tor
+     */
+	score_matrix(const score_matrix& sm);
+        //TODO: NOTE: required by term_dictionary's std::pair constructor
+        //-- treace requirement 
+    /**
+     * Copy assignment operator
+     */
+    score_matrix& operator=(const score_matrix& rhs);
+
     //Accessors
     /**
      * Overload operator() to access and set (i,j)-th element of the matrix
@@ -118,10 +130,16 @@ public:
      */
     bool operator()(size_t row, size_t col) const;
 
+    //Modifiers
     /**
      * Addition operator overload to perform bitwise OR
      */
     score_matrix operator+(const score_matrix& rhs) const;
+
+    /**
+     * Compound addition operator overload to perform bitwise OR
+     */
+    score_matrix& operator+=(const score_matrix& rhs);
 
     /**
      * Equality comparison operator overload
@@ -139,8 +157,6 @@ public:
     friend std::ostream& operator<<(std::ostream& stream, 
             const score_matrix& sm);
 
-//TODO: Remaining Special member functions
-//
 };
 
 } //score_matrix

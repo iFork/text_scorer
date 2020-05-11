@@ -26,19 +26,31 @@ namespace dictionary {
 //==========TESTING
 void test_stub_info() ;
 
+void test_span_less_than();
 
 /**
  * Struct holding start and end positions of a stub
  */
 struct span {
     /**
-     * Start index (inclusive) of a stub in a sentence from which it was cut out
+     * Start index (end let-closed) of a stub in a sentence from 
+     * which it was cut out.
      */
     size_t start;
     /**
-     * End index (exclusive) of a stub in a sentence from which it was cut out
+     * End index (end right-open) of a stub in a sentence from which 
+     * it was cut out.
      */
     size_t end;
+
+    //Helper
+    size_t length() const;
+
+    //Overloads for sorting
+    /**
+     * Comparison operator overload.
+     */
+    bool operator<(const span& rhs) const;
 };
 
 /**

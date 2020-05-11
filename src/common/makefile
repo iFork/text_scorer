@@ -18,18 +18,11 @@
 
 # The source files under the project.
 cpp_files := \
-		term_dictionary.cpp \
-		stub_dictionary.cpp \
-		stub_info.cpp \
-		term_list.cpp \
 
 # The header files under the project, which are supposed to be used by other
 # projects.
 public_headers := \
-		term_dictionary.hpp \
-		stub_dictionary.hpp \
-		stub_info.hpp \
-		term_list.hpp \
+		defines.hpp \
 
 # Building QT project.
 # TODO: Add detailed comments.
@@ -92,7 +85,6 @@ linker_flags += -lstdc++ -ldl \
 # Note: Specifying the library version is not supported.
 #
 libs := \
-	score_matrix \
 	
 
 # Library version

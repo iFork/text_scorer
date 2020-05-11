@@ -1,6 +1,10 @@
 hello
 Hello
+from
 new
 New York
-Hello New York
-invalid line will invalidatefailbit of getline
+stock exchange
+New York stock exchange
+stock
+exchange
+

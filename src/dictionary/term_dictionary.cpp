@@ -13,19 +13,26 @@ namespace text_scorer {
 namespace dictionary {
 
 
-term_dictionary::term_dictionary(const std::string& user_file_path, size_t seed, 
-               size_t hash_load_factor)
+term_dictionary::term_dictionary(const std::string& terms_file_path, 
+                size_t seed, 
+                size_t hash_load_factor)
+    //: m_term_score(min_bucket_count)
+    //TODO: get number of lines in a terms files and set it
+    //as min bucket count to cut on rehashing
+    //or call rehash beforehand below
                                             //TODO: will throw what?
 {
-    PLOGD << "Constructing term_dictionary at " << this 
-        << " with random score matrices from " 
-        << user_file_path << " file with starting seed = " << seed;
+    PLOGD << "Constructing term_dictionary at " << this
+          << " with random score matrices"; 
+    PLOGV << "with terms_file_path `" << terms_file_path << "`"
+          << ", seed `" << seed << "`"
+          << ", hash_load_factor `" << hash_load_factor << "`";
     std::ifstream file;
     std::string term;
-    file.open(user_file_path.c_str());
+    file.open(terms_file_path.c_str());
     if(!file.is_open()){
         //TODO: EXCEPTION
-        std::cout << "file is not opened \n";
+        PLOGE << terms_file_path << " file is not opened at " << &file;
     }
     while (std::getline(file, term)){ 
         //TODO: catch seed++ overflow and/or initial seed being close to limit
@@ -40,14 +47,16 @@ term_dictionary::term_dictionary(const std::string& user_file_path, size_t seed,
     }
     if(file.bad()) {
         //TODO: EXCEPTION
-        std::cout << "badbit raised when reading file \n" ; // 
+        PLOGE << "badbit raised when reading file at " << &file;  
     }
     //file.close();
-    //TODO: check load factor and rehash if many collisions
+    //TODO: check load factor and rehash if _ many collisions
     //
-    PLOGV << "term_dictionary constructed at " << this 
+    PLOGD << "term_dictionary constructed at " << this 
         << " with average load factor of " << m_term_score.load_factor()
-        << " and max load factor of " << m_term_score.max_load_factor();
+        << " and max load factor of " << m_term_score.max_load_factor()
+        << " and buckets count of " << m_term_score.bucket_count() ;
+    PLOGV << "Term dictionary dump: " << *this;
 }
 
 term_dictionary::~term_dictionary() throw()
@@ -70,6 +79,7 @@ term_dictionary::~term_dictionary() throw()
 //}
 
 term_dictionary::const_iterator term_dictionary::find(const std::string& term)
+                                                            const
 {
     return m_term_score.find(term);
 }

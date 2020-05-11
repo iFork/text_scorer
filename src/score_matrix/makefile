@@ -48,20 +48,12 @@ cflags += \
 		-std=c++98 \
 		-I$(HOME)/boost_1_72_0 
 
-#		-I$(HOME)/boost_1_72_0 
-#		-fPIC \
-#		-I$(HOME)/poco/Net/include \
-#		-I$(HOME)/poco/JSON/include \
-#		-I$(HOME)/poco/Foundation/include \
 
 #TODO: or change flags in mkf/definitions.mk
 compiler_flags += \
 		-std=c++98 \
 		-I$(HOME)/boost_1_72_0 
 
-		#-I$(HOME)/poco/JSON/include \
-		#-I$(HOME)/poco/Foundation/include \
-		#-I$(HOME)/poco/Net/include \
 
 compiler_flags := $(filter-out -Werror -Wconversion -Wundef, $(compiler_flags))
 # -Wundef : for boost
@@ -93,7 +85,10 @@ linker_flags += -lstdc++ -ldl \
 # Note: Specifying the library version is not supported.
 #
 libs := \
-	
+	common \
+
+	#TODO: NOTE: ATTENTION: adding this as lib here needed 
+	# to be able to use inc/ headers 
 
 # Library version
 #

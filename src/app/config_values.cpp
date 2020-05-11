@@ -12,9 +12,6 @@ namespace app {
 
 config_values::config_values(int argc, char* argv[])
 {
-
-    PLOGD << "Constructing config_values at " << this 
-        << " with argc = " << argc << ", argv = " << *argv;
 	try {
     TCLAP::CmdLine cmd(
     "Calculate score of the sentence based on the dictionary."
@@ -61,7 +58,7 @@ config_values::config_values(int argc, char* argv[])
                 "user_data/terms.txt", "path/to/terms_list");
     cmd.add(terms_file_arg);
     TCLAP::ValueArg<std::string> stopwords_file_arg("s","stops","Stopwords file", 
-                false, "user_data/terms.txt", "path/to/stopwords_list");
+                false, "user_data/stopwords.txt", "path/to/stopwords_list");
     cmd.add(stopwords_file_arg);
     TCLAP::ValueArg<size_t> hash_load_factor_arg("","hload","Load factor of"
                 " hashmap buckets", false, 1, "positive integer");
@@ -73,7 +70,6 @@ config_values::config_values(int argc, char* argv[])
     //TODO: terms_dump_files; topwords_dump_file
 	cmd.parse(argc, argv);
 	// Get the value parsed by each arg.
-    //TODO: make CTOR ???
 	log_severity = static_cast<plog::Severity>(log_level_arg.getValue());
     enable_console_logging = enable_console_logging_arg.getValue();
     log_file = log_file_arg.getValue();
@@ -86,6 +82,22 @@ config_values::config_values(int argc, char* argv[])
         PLOGF << e.error() << " for arg " << e.argId() << ". Exiting.";
         std::exit(TEXT_SCORER_APP_ERROR_CMDLINE_ARG_PARSING);
     }
+}
+
+std::ostream& operator<<(std::ostream& stream, 
+        const config_values& cv)
+{
+    stream << "< "
+        <<  " log_severity: " << cv.log_severity
+        << ", log_file: " << cv.log_file
+        << ", enable_console_logging: " << cv.enable_console_logging
+        << ", run_mode: " << cv.run_mode
+        << ", terms_file: " << cv.terms_file
+        << ", stopwords_file: " << cv.stopwords_file
+        << ", hash_load_factor: " << cv.hash_load_factor
+        << ", seed: " << cv.seed
+        << " >";
+    return stream;
 }
 
 } //app
