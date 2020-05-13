@@ -134,29 +134,6 @@ void scorer::push_score(
 }
 
 
-//check if there are other (proceeding) terms with at least partial overlap
-//e.i. left side (beginning) of a next term overlaps, at least partially 
-//with this term, from its right (end) 
-bool scorer::has_overlap_from_right(
-        const dictionary::span& this_span,
-        const dictionary::span& next_span)
-{
-    PLOGD << "Called...";
-    //precondition: arguments come sorted in non-descending order
-    assert(this_span < next_span);
-    return (next_span.start < this_span.end);
-}
-
-//check if the length of the (proceeding) overlapping term is greater than the 
-//length of this term
-bool scorer::overlapper_is_longer(
-        const dictionary::span& this_span,
-        const dictionary::span& overlapper_span)
-{
-    PLOGD << "Called...";
-    return (overlapper_span.length() > this_span.length());
-}
-
 //bounce terms per given scoring_policy
 void scorer::bounce(const scoring_policy policy)
 {
@@ -174,6 +151,9 @@ void scorer::bounce(const scoring_policy policy)
 }
 
 //set bounced flag for terms superseded by bigger terms
+//check if there are other (proceeding) terms with at least partial overlap
+//check if the length of the (proceeding) overlapping term is greater than the 
+//length of this term, if yes, bounce that term
 void scorer::bounce_small_terms_bd()
 {
     PLOGD << "Called...";
@@ -186,8 +166,12 @@ void scorer::bounce_small_terms_bd()
         for(; next_it != end_it; next_it++) {
             assert(next_it->term_span_p);
             const dictionary::span& next_span = *(next_it->term_span_p);
-            if(scorer::has_overlap_from_right(this_span, next_span)) {
-                if(scorer::overlapper_is_longer(this_span, next_span)) {
+            if(this_span.has_overlap_with(next_span)) {
+                //precondition: arguments come sorted in non-descending order
+                assert(this_span < next_span);
+                //TODO: possibility to optimize: once has_overlap_with returns
+                //false - next terms will have no more overlaps
+                if(next_span.is_longer_than(this_span)) {
                     //if this term is shorter than overlapping neighbor, 
                     //this term is bounced
                     this_it->bounced = true;

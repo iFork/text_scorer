@@ -107,14 +107,6 @@ private:
     void push_score(
         const dictionary::stub_dictionary::iterator stub_it);
 
-    static bool has_overlap_from_right(
-        const dictionary::span& this_span,
-        const dictionary::span& next_span);
-
-    static bool overlapper_is_longer(
-        const dictionary::span& this_span,
-        const dictionary::span& overlapper_span);
-
     void bounce(const scoring_policy policy);
 
     void bounce_small_terms_bd();

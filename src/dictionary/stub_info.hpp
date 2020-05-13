@@ -44,11 +44,32 @@ struct span {
     size_t end;
 
     //Helper
+    /**
+     * @return length of the span, i.e. difference between start and end.
+     */
     size_t length() const;
+    /**
+     * Check if two spans overlap.
+     * @param other_span Span to check with.
+     * @return True if given span overlaps with this span.
+     */
+    bool has_overlap_with(const span& other_span) const;
+
+    /**
+     * Compare lengths of two spans.
+     * @param other_span Span to compare with.
+     * @return True if this span's length is greater than the length of a 
+     * given span.
+     */
+    bool is_longer_than(const span& other_span) const;
 
     //Overloads for sorting
     /**
-     * Comparison operator overload.
+     * Compare spans with respect to their start and end positions.
+     * Spans with smaller start value are considered as smaller.
+     * Among spans with same start value, spans with smaller end value
+     * are considered as smaller.
+     * @remark Required for sorting algorithm.
      */
     bool operator<(const span& rhs) const;
 };

@@ -18,6 +18,19 @@ size_t span::length() const
     return end - start;
 }
 
+bool span::has_overlap_with(const span& other_span) const
+{
+    PLOGD << "Called...";
+    return (other_span.start < end
+            && other_span.end > start);
+}
+
+bool span::is_longer_than(const span& other_span) const
+{
+    PLOGD << "Called...";
+    return length() > other_span.length();
+}
+
 bool span::operator<(const span& rhs) const
 {
     if(start == rhs.start) {
