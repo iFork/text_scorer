@@ -1,3 +1,6 @@
+/**
+ * @file 
+*/
 
 #include <plog/Log.h>
 #include <plog/Appenders/ColorConsoleAppender.h>
@@ -45,7 +48,19 @@ int main(int argc, char* argv[])
     app::top a_top(cfg_vals.run_mode, cfg_vals.terms_file, 
                     cfg_vals.seed, cfg_vals.hash_load_factor,
                     cfg_vals.stopwords_file);
-    a_top.run();
+    try {
+        //extend try block up ?
+        a_top.run();
+    } 
+    // catch (const file_open_error)
+        //TODO: change to specific exceptions 
+        //score provided -- std::bad_alloc 
+        //or plese_terminate_me as- new_handler -- to set 
+        //
+    catch (...) {
+        PLOGF << "Unhandled exception. Exiting...";
+        return 1;
+    }
 
 // Tests 
     //app::test_score_provider_ctor();
@@ -80,6 +95,16 @@ int main(int argc, char* argv[])
  * @param log_severity Enum value for log severity level.
  * @param log_file File to write log into.
  * @param enable_console_logging Boolean to add also console logging.
+ * @remark Mapping of supported macros and log level and corresponding enum:
+ * Macro | Log Level | Enum Value
+ * ----- | --------  | ----------
+ * PLOGV | "verbose" | 6
+ * PLOGD | "debug"   | 5
+ * PLOGI | "info"    | 4
+ * PLOGW | "warning" | 3
+ * PLOGE | "error"   | 2
+ * PLOGF | "fatal"   | 1
+ * PLOGN | "none"    | 0
  */
 void init_logger(const plog::Severity log_severity, const std::string& log_file,
         bool enable_console_logging)

@@ -87,6 +87,9 @@ private:
     dictionary::term_dictionary* m_terms_p;
     dictionary::term_list* m_stopwords_p;
 
+    //Private helpers
+    void cleanup();
+
     //Special member function not supported
 	score_provider(const score_provider&);
 	score_provider& operator=(const score_provider&);

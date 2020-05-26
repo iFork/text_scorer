@@ -59,6 +59,11 @@ struct config_values {
     //const std::string terms_dump_file;
     //const std::string stopwords_dump_file;
 
+private: 
+    //Special member function not supported
+	config_values(const config_values&);
+	config_values& operator=(const config_values&);
+
 }; 
 
 /**

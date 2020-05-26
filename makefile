@@ -42,6 +42,8 @@ projects := \
 	src/app \
 	src/dictionary \
 	src/score_matrix \
+	src/parser \
+	src/exception \
 	src/common \
 
 # Prerequisite tools
@@ -97,9 +99,11 @@ include $(mkf_path)/doc.mk
 
 # Dependencies between projects
 #
-src/app: src/dictionary src/score_matrix src/common
-src/dictionary: src/score_matrix src/common
-src/score_matrix: src/common
+src/app: src/dictionary src/score_matrix src/parser src/exception src/common 
+src/dictionary: src/score_matrix src/exception src/common 
+src/score_matrix: src/exception src/common 
+src/parser: src/exception src/common
+src/exception: src/common 	
 
 
        #	src/utilities

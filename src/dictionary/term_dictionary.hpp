@@ -141,8 +141,7 @@ public:
 
 
 private:
-
-//Special member function not supported
+    //Special member function not supported
 	term_dictionary(const term_dictionary&);
 	term_dictionary& operator=(const term_dictionary&);
 

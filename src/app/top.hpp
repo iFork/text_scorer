@@ -1,8 +1,6 @@
 
 /**
- * @file src/app/top.hpp
- * @brief 
- * TODO: 
+ * @file
  */
 
 #ifndef TEXT_SCORER_APP_TOP_HPP
@@ -11,6 +9,11 @@
 #include "score_provider.hpp"
 #include "scorer.hpp"
 
+#include "parser/parser.hpp"
+#include "exception/parse_error.hpp"
+//move to cpp 
+
+#include <vector>
 #include <string>
 
 
@@ -61,8 +64,14 @@ public:
 private:
     //Private data members
     score_provider m_score_provider;
-    
+    parser::term_parser m_term_parser;
+    //TODO
+    std::string m_delimiters;
+    std::vector<std::string> m_tokens;
+
     //Private helpers
+
+
     //TODO: process / validate interactive input 
         //TODO: catch invalid chars in term - terminate or skip ?
         //TODO: make lower case !!

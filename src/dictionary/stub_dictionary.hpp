@@ -40,9 +40,11 @@ public:
         
 
     //C-tor, d-tor
+    //TODO: ENHANCEMENT - skip-logic for term delimiters to stop 
+    //composing terms when term delimiter is encountered.
     /**
     * C-tor decomposing word sequence into a set of all possible sequential 
-    * stabs.
+    * stubs.
     * @param word_sequence A string to decompose
     * @param max_term_length Maximum length of term considered when 
     *                        synthesizing terms from a word sequence

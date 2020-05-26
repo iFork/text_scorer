@@ -126,8 +126,8 @@ void scorer::push_score(
 {
     PLOGD << "Called ...";
     scoring_info si;
-    si.term_span_p = &stub_it->second.get<dictionary::tuple_elem_span>();
-    si.term_score_p = 
+    si.term_span_observer_p = &stub_it->second.get<dictionary::tuple_elem_span>();
+    si.term_score_observer_p = 
     &stub_it->second.get<dictionary::tuple_elem_score_matrix>();
     m_scores.push_back(si);
     PLOGV << "scoring_info pushed is: " << si;
@@ -161,11 +161,11 @@ void scorer::bounce_small_terms_bd()
     std::vector<scoring_info>::iterator next_it = boost::next(this_it);
     std::vector<scoring_info>::iterator end_it = m_scores.end();
     while(next_it != end_it) {
-        assert(this_it->term_span_p);
-        const dictionary::span& this_span = *(this_it->term_span_p);
+        assert(this_it->term_span_observer_p);
+        const dictionary::span& this_span = *(this_it->term_span_observer_p);
         for(; next_it != end_it; next_it++) {
-            assert(next_it->term_span_p);
-            const dictionary::span& next_span = *(next_it->term_span_p);
+            assert(next_it->term_span_observer_p);
+            const dictionary::span& next_span = *(next_it->term_span_observer_p);
             if(this_span.has_overlap_with(next_span)) {
                 //precondition: arguments come sorted in non-descending order
                 assert(this_span < next_span);
@@ -201,8 +201,8 @@ void scorer::sum_scores()
     /* std::vector<scoring_info>::iterator end_it = m_scores.end(); */
     for(; it != m_scores.end(); it++) {
         if(!it->bounced) {
-            assert(it->term_score_p);
-            m_total_score += *(it->term_score_p);      
+            assert(it->term_score_observer_p);
+            m_total_score += *(it->term_score_observer_p);      
         }
     }
     PLOGV << "resulted total score is: " << m_total_score;

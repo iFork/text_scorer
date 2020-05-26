@@ -21,24 +21,37 @@ score_provider::score_provider(const init_mode mode,
         << ", seed `" << seed << "`"
         << ", hash_load_factor `" << hash_load_factor << "`"
         << ", stopwords_file_path `" << stopwords_file_path << "`";
-    if(init_mode_user_files == mode) {
-        m_terms_p = new dictionary::term_dictionary(terms_file_path, seed, 
-                hash_load_factor);
-        m_stopwords_p = new dictionary::term_list(stopwords_file_path);
-    }
-    else {
-        std::ostringstream msg;
-        msg << "Init mode " << static_cast<int>(mode) 
-            << " is not implemented";
-        PLOGF << msg;
-        throw std::runtime_error(msg.str());
-        //TODO: custom exception, document exception 
+    try {
+        if(init_mode_user_files == mode) {
+            m_terms_p = new dictionary::term_dictionary(terms_file_path, seed, 
+                    hash_load_factor);
+            m_stopwords_p = new dictionary::term_list(stopwords_file_path);
+        }
+        else {
+            std::ostringstream msg;
+            msg << "Init mode " << static_cast<int>(mode) 
+                << " is not implemented";
+            PLOGF << msg;
+            throw std::runtime_error(msg.str());
+            //TODO: custom exception, document exception 
+        }
+    } catch (...) {
+        PLOGF << "Exception caught in c-tor of " << this << ". Cleaning up...";
+        cleanup();
+        throw;
+        //TODO: DOING 
     }
 }
 
 score_provider::~score_provider()
 {
     PLOGD << "Destructing score_provider at " << this ;
+    cleanup();
+}
+
+void score_provider::cleanup()
+{
+    PLOGV << "Called...";
     delete m_terms_p;
     delete m_stopwords_p;
 }

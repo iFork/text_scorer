@@ -18,22 +18,20 @@
 
 # The source files under the project.
 cpp_files := \
-		main.cpp \
-		score_provider.cpp \
-		scorer.cpp \
-		scoring_info.cpp \
-		top.cpp \
-		config_values.cpp \
-
+		base_exception.cpp \
+		file_error.cpp \
+		parse_error.cpp \
 
 # The header files under the project, which are supposed to be used by other
 # projects.
 public_headers := \
-
+		base_exception.hpp \
+		file_error.hpp \
+		parse_error.hpp \
 
 # Building QT project.
 # TODO: Add detailed comments.
-qt_headers := 
+qt_headers :=
 
 moc_flags :=
 
@@ -49,34 +47,30 @@ uic_flags :=
 # 
 # Note: It is not recommended to overwrite the value (don't use := operator).
 # 
+
 cflags += \
 		-std=c++98 \
 		-I ../utils/plog/include \
-		-I ../utils/tclap/include \
-		-I$(HOME)/boost_1_72_0  
-
+		-I$(HOME)/boost_1_72_0 
+#		-fPIC \
 
 #TODO: or change flags in mkf/definitions.mk
 compiler_flags += \
 		-std=c++98 \
 		-I ../utils/plog/include \
-		-I ../utils/tclap/include \
-		-I$(HOME)/boost_1_72_0 \
-
+		-I$(HOME)/boost_1_72_0 
 
 compiler_flags := $(filter-out -Werror -Wconversion -Wundef, $(compiler_flags))
 # -Wundef : for boost
 
-
 # The linker flags can be updated/overwritten for the project
 #
-# Example:
+# Example
 # linker_flags += -i 
 #
 # Note: It is not recommended to overwrite the value (don't use := operator).
 #
 linker_flags += -lstdc++ -ldl \
-		#-lW \   # to make order of libs in this list irrelevant
 
 # The libraries which should be linked to the current project. The link type is
 # specified as a global parameter, except the libraries, which are built as a
@@ -90,11 +84,8 @@ linker_flags += -lstdc++ -ldl \
 # 
 # Note: Specifying the library version is not supported.
 #
-
-libs :=	\
-	score_matrix \
-	dictionary \
-	parser \
+libs := \
+	
 
 # Library version
 #
@@ -120,4 +111,4 @@ lib_version :=
 # (by default $(project_root)/lib/).
 #
 
-include $(mkf_path)/exe.mk
+include $(mkf_path)/lib.mk

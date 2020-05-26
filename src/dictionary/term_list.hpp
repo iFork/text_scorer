@@ -66,7 +66,7 @@ private:
 
 //TODO: ITERATORS - EXPOSE ?
 
-//TODO: Special member function not supported
+//Special member function not supported
 	term_list(const term_list&);
 	term_list& operator=(const term_list&);
 };

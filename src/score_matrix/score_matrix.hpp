@@ -1,8 +1,6 @@
 
 /**
- * @file src/score_matrix/score_matrix.hpp
- * @brief 
- * TODO: 
+ * @file 
 */
 
 #ifndef TEXT_SCORER_SCORE_MATRIX_HPP
@@ -59,6 +57,11 @@ public:
 
     //C-tor
     score_matrix_randomizer(int seed);
+
+    //Special member function not supported
+	score_matrix_randomizer(const score_matrix_randomizer&);
+	score_matrix_randomizer& operator=(const score_matrix_randomizer&);
+
 };
 
 class score_matrix {
@@ -98,17 +101,10 @@ public:
     score_matrix(int num);
 
     /**
-     * C-tor to initialize matrix with a given bitset.
-     * Used in operator+ overload 
-     */
-    score_matrix(const std::bitset<N_ELEMENTS> bits);
-
-    /**
      * C-tor to initialize matrix with a given initializer / randomizer.
      */
     score_matrix(const score_matrix_randomizer& smr);
 
-    //Special member function not supported
     /**
      * Copy c-tor
      */
@@ -119,6 +115,7 @@ public:
      * Copy assignment operator
      */
     score_matrix& operator=(const score_matrix& rhs);
+
 
     //Accessors
     /**
@@ -151,6 +148,7 @@ public:
      */
     bool operator!=(const score_matrix& rhs) const;
 
+    //friends
     /**
      * Output stream insertion operator overload
      */

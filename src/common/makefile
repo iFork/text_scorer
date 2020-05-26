@@ -65,12 +65,7 @@ compiler_flags := $(filter-out -Werror -Wconversion -Wundef, $(compiler_flags))
 #
 # Note: It is not recommended to overwrite the value (don't use := operator).
 #
-linker_flags += -lstdc++ -ldl \
-#		-lm \ #math, needed for boost::hash
-#				-lPocoFoundation \
-#				-lPocoJSON \
-#				-L$(HOME)/poco/lib/Linux/$(architecture)
-#				-lPocoNet \
+linker_flags += \
 
 # The libraries which should be linked to the current project. The link type is
 # specified as a global parameter, except the libraries, which are built as a

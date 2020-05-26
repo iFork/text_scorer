@@ -1,5 +1,6 @@
 
 #include "score_matrix.hpp"
+#include <algorithm>
 
 
 namespace instigate {
@@ -54,10 +55,6 @@ score_matrix::score_matrix(int num):
 {
 }
 
-score_matrix::score_matrix(const std::bitset<N_ELEMENTS> bits):
-    m_matrix(bits)
-{
-}
 
 score_matrix::score_matrix(const score_matrix_randomizer& smr):
     m_matrix(smr.block_4)
@@ -112,19 +109,13 @@ score_matrix::score_matrix(const score_matrix& sm):
 
 score_matrix& score_matrix::operator=(const score_matrix& rhs)
 {
+    //TODO: DISCUSS: assuming bitset copy assignment is safe
+    //otherwise - use copy-swap idiom
     m_matrix = rhs.m_matrix;
     return *this;
 }
 
 //Accessors Implementation
-std::ostream& operator<<(std::ostream& stream, 
-            const score_matrix& sm)
-{
-    stream << sm.m_matrix;
-    return stream;
-}
-
-
 std::bitset<score_matrix::N_ELEMENTS>::reference score_matrix::operator()
     (size_t row, size_t col)
 {
@@ -142,9 +133,9 @@ bool score_matrix::operator()(size_t row, size_t col) const
 
 score_matrix score_matrix::operator+(const score_matrix& rhs) const
 {
-    std::bitset<score_matrix::N_ELEMENTS> result_bits = 
-        m_matrix | rhs.m_matrix;
-    return score_matrix(result_bits);
+    score_matrix result(*this);
+    result += rhs;
+    return result;
 }
 
 score_matrix& score_matrix::operator+=(const score_matrix& rhs)
@@ -162,6 +153,16 @@ bool score_matrix::operator!=(const score_matrix& rhs) const
 {
     return m_matrix != rhs.m_matrix;
 }
+
+//Friends Implementation
+std::ostream& operator<<(std::ostream& stream, 
+            const score_matrix& sm)
+{
+    stream << sm.m_matrix;
+    return stream;
+}
+
+
 //=============TESTING=
 
 void test_score_matrix_subscripting()
